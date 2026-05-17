@@ -1,3 +1,4 @@
+//VentanaPrincipal
 package solucion.interfaz;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -61,35 +62,32 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
         calcular = new JButton();
         calcular.setText("Calcular");
         calcular.setBounds(20, 170, 100, 23); 
-        calcular.addActionListener(this); // Agrega un ActionListener al botón
+        calcular.addActionListener(this);
 
-        // Establece el botón Limpiar
+    
         limpiar = new JButton();
         limpiar.setText("Limpiar");
-        limpiar.setBounds(125, 170, 80, 23); /* Establece la posición del botón Limpiar */
-        limpiar.addActionListener(this); // Agrega un ActionListener al botón
+        limpiar.setBounds(125, 170, 80, 23); 
+        limpiar.addActionListener(this); 
 
-        // Establece la etiqueta del promedio con su valor numérico
+    
         promedio = new JLabel();
         promedio.setText("Promedio = ");
-        promedio.setBounds(20, 210, 200, 23); /* Establece la posición de la etiqueta promedio */
+        promedio.setBounds(20, 210, 200, 23); 
 
-        // Establece la etiqueta de la desviación con su valor numérico
+
         desviación = new JLabel();
         desviación.setText("Desviación = ");
-        desviación.setBounds(20, 240, 200, 23); /* Establece la posición de la etiqueta desviación */
+        desviación.setBounds(20, 240, 200, 23); 
 
-        // Establece la etiqueta de la nota mayor con su valor numérico
         mayor = new JLabel();
         mayor.setText("Nota mayor = ");
-        mayor.setBounds(20, 270, 200, 23); /* Establece la posición de la etiqueta nota mayor */
+        mayor.setBounds(20, 270, 200, 23); 
 
-        // Establece la etiqueta de la nota menor con su valor numérico
         menor = new JLabel();
         menor.setText("Nota menor = ");
-        menor.setBounds(20, 300, 200, 23); /* Establece la posición de la etiqueta nota menor */
+        menor.setBounds(20, 300, 200, 23); 
 
-        // Se añade cada componente gráfico al contenedor de la ventana
         contenedor.add(nota1);
         contenedor.add(campoNota1);
         contenedor.add(nota2);
@@ -108,37 +106,29 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
         contenedor.add(menor);
     }
 
-    /**
-     * Método que gestiona los eventos generados en la ventana principal
-     */
+
     @Override
     public void actionPerformed(ActionEvent evento) {
-        if (evento.getSource() == calcular) { /* Si se pulsa el botón Calcular */
+        if (evento.getSource() == calcular) { 
             try {
-                Notas notas = new Notas(); // Se crea un objeto Notas
+                Notas notas = new Notas(); 
                 
-                // Se obtiene y convierte el valor numérico de cada nota
                 notas.listaNotas[0] = Double.parseDouble(campoNota1.getText());
                 notas.listaNotas[1] = Double.parseDouble(campoNota2.getText());
                 notas.listaNotas[2] = Double.parseDouble(campoNota3.getText());
                 notas.listaNotas[3] = Double.parseDouble(campoNota4.getText());
                 notas.listaNotas[4] = Double.parseDouble(campoNota5.getText());
 
-                // Se calcula el promedio y la desviación
                 notas.calcularPromedio();
                 notas.calcularDesviación();
 
-                // Se muestra el promedio formateado
                 promedio.setText("Promedio = " + String.format("%.2f", notas.calcularPromedio()));
 
-                // Se muestra la desviación formateada
                 double desv = notas.calcularDesviación();
                 desviación.setText("Desviación estándar = " + String.format("%.2f", desv));
 
-                // Se muestra el valor mayor formateado
                 mayor.setText("Valor mayor = " + String.format("%.2f", notas.calcularMayor()));
 
-                // Se muestra el valor menor formateado
                 menor.setText("Valor menor = " + String.format("%.2f", notas.calcularMenor()));
                 
             } catch (NumberFormatException e) {
@@ -147,7 +137,6 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
             }
         }
 
-        /* Si se pulsa el botón Limpiar se dejan en blanco los campos de notas */
         if (evento.getSource() == limpiar) {
             campoNota1.setText("");
             campoNota2.setText("");

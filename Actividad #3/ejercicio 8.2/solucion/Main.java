@@ -1,3 +1,4 @@
+//Main
 package solucion;
 
 import solucion.interfaz.VentanaPrincipal;
