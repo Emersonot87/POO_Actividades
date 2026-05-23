@@ -1,10 +1,5 @@
 ﻿package logica;
 
-/**
- * Esta clase denominada Esfera es una subclase de FiguraGeométrica
- * que cuenta con un radio.
- * @version 1.2/2020
- */
 public class Esfera extends FiguraGeométrica {
     private double radio;
 

@@ -5,11 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Esta clase denominada VentanaPrincipal define una interfaz gráfica
- * que permitirá consultar un menú principal con varias figuras geométricas.
- * @version 1.2/2020
- */
 public class VentanaPrincipal extends JFrame implements ActionListener {
     private Container contenedor;
     private JButton cilindroButton;

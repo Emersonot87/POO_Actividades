@@ -1,10 +1,5 @@
 package logica;
 
-/**
- * Esta clase denominada Cubo es una subclase de FiguraGeométrica
- * que cuenta con un lado.
- * @version 1.2/2020
- */
 public class Cubo extends FiguraGeométrica {
     private double lado;
 

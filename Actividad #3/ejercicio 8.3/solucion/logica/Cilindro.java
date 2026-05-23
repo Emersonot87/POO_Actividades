@@ -1,10 +1,6 @@
 ﻿package logica;
 
-/**
- * Esta clase denominada Cilindro es una subclase de FiguraGeométrica
- * que cuenta con un radio y una altura.
- * @version 1.2/2020
- */
+
 public class Cilindro extends FiguraGeométrica {
     private double radio;
     private double altura;

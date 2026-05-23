@@ -58,12 +58,23 @@ public class FiguraImagen extends JPanel {
 
     private File buscarDirectorioImagenes() {
         File actual = new File(System.getProperty("user.dir"));
-        File directo = new File(actual, "Actividad #3\\ejercicio 8.3\\solucion\\imagenes");
+        
+        File directo = new File(actual, "imagenes");
         if (directo.isDirectory()) {
             return directo;
         }
-
-        directo = new File(actual, "imagenes");
+        
+        directo = new File(actual.getParentFile(), "imagenes");
+        if (directo != null && directo.isDirectory()) {
+            return directo;
+        }
+        
+        directo = new File(actual, "solucion" + File.separator + "imagenes");
+        if (directo.isDirectory()) {
+            return directo;
+        }
+        
+        directo = new File(actual, "ejercicio 8.3" + File.separator + "solucion" + File.separator + "imagenes");
         if (directo.isDirectory()) {
             return directo;
         }

@@ -1,10 +1,5 @@
 ﻿package logica;
 
-/**
- * Esta clase denominada Pirámide es una subclase de FiguraGeométrica
- * que cuenta con una base, una altura y un apotema.
- * @version 1.2/2020
- */
 public class Piramide extends FiguraGeométrica {
     private double base;
     private double altura;

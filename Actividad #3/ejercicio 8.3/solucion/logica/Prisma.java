@@ -1,10 +1,5 @@
 package logica;
 
-/**
- * Esta clase denominada Prisma es una subclase de FiguraGeométrica
- * que cuenta con una base, altura y profundidad.
- * @version 1.2/2020
- */
 public class Prisma extends FiguraGeométrica {
     private double base;
     private double altura;
