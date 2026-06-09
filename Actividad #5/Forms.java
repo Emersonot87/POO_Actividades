@@ -1,120 +1,84 @@
-// Java program to create a file "data.txt"
-// and add a new contact in the file
-
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.NumberFormatException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
+
+// Create a file "data.txt"
+// Add a contact to the file "data.txt"
 class AddFriend {
 
-    public static String addFriend(String newName, String newNumberStr)
+    public static void addFriend(String newName, String newNumberStr)
     {
 
         try {
 
-            // Get the number to be updated
-            // from the Command line argument
             long newNumber = Long.parseLong(newNumberStr);
 
             String nameNumberString;
             String name;
             long number;
-            int index;
 
-            // Using file pointer creating the file.
             File file = new File("data.txt");
 
-            if (!file.exists()) {
+            if (file.exists()==false) {
 
-                // Create a new file if not exists.
                 file.createNewFile();
             }
 
-            // Opening file in reading and write mode.
-
-            RandomAccessFile raf
-                = new RandomAccessFile(file, "rw");
+            RandomAccessFile raf = new RandomAccessFile(file, "rw");
             boolean found = false;
 
-            // Checking whether the name
-            // of contact already exists.
-            // getFilePointer() give the current offset
-            // value from start of the file.
             while (raf.getFilePointer() < raf.length()) {
 
-                // reading line from the file.
                 nameNumberString = raf.readLine();
 
-                // skip empty or malformed lines
                 if (nameNumberString == null || !nameNumberString.contains("!")) continue;
 
-                // splitting the string to get name and
-                // number
-                String[] lineSplit
-                    = nameNumberString.split("!");
+                String[] lineSplit = nameNumberString.split("!");
 
-                // separating name and number.
                 name = lineSplit[0];
                 number = Long.parseLong(lineSplit[1]);
 
-                // if condition to find existence of record.
-                if (name.equals(newName)
-                    || number == newNumber) {
+                if (name.equals(newName) && number == newNumber) {
                     found = true;
+                    JOptionPane.showMessageDialog(null, "Attention " + newName + " is already in the list.");
                     break;
                 }
             }
 
             if (found == false) {
 
-                // Enter the if block when a record
-                // is not already present in the file.
-                nameNumberString
-                    = newName + "!"
-                      + String.valueOf(newNumber);
+                nameNumberString = newName + "!" + String.valueOf(newNumber);
 
-                // writeBytes function to write a string
-                // as a sequence of bytes.
                 raf.writeBytes(nameNumberString);
-
-                // To insert the next record in new line.
                 raf.writeBytes(System.lineSeparator());
-
-                // Closing the resources.
+                JOptionPane.showMessageDialog(null, "The friend " + newName + " has been added.");
                 raf.close();
-
-                // Return the message
-                return " Friend added. ";
             }
-            // The contact to be updated
-            // could not be found
+
             else {
 
-                // Closing the resources.
                 raf.close();
-
-                // Return the message
-                return " Input name does not exists. ";
             }
         }
 
         catch (IOException ioe) {
 
-            return ioe.toString();
+            JOptionPane.showMessageDialog(null, ioe.toString());
         }
         catch (NumberFormatException nef) {
 
-            return nef.toString();
+            JOptionPane.showMessageDialog(null, nef.toString());
         }
     }
 }
 
 
-// Java program to read from file "data.txt"
-// and display the contacts
+//Read from file "data.txt"
 class DisplayFriends {
 
     public static List<String[]> displayFriends(String searchName)
@@ -127,49 +91,31 @@ class DisplayFriends {
             String nameNumberString;
             String name;
             long number;
-            int index;
-
-            // Using file pointer creating the file.
             File file = new File("data.txt");
 
-            if (!file.exists()) {
+            if (file.exists()==false) {
 
-                // Create a new file if not exists.
                 file.createNewFile();
             }
 
-            // Opening file in reading and write mode.
+            RandomAccessFile raf = new RandomAccessFile(file, "rw");
 
-            RandomAccessFile raf
-                = new RandomAccessFile(file, "rw");
-
-            // Traversing the file
-            // getFilePointer() give the current offset
-            // value from start of the file.
             while (raf.getFilePointer() < raf.length()) {
 
-                // reading line from the file.
                 nameNumberString = raf.readLine();
 
-                // skip empty or malformed lines
                 if (nameNumberString == null || !nameNumberString.contains("!")) continue;
 
-                // splitting the string to get name and
-                // number
-                String[] lineSplit
-                    = nameNumberString.split("!");
+                String[] lineSplit = nameNumberString.split("!");
 
-                // separating name and number.
                 name = lineSplit[0];
                 number = Long.parseLong(lineSplit[1]);
 
-                // Add contact to results if it matches the search
                 if (searchName.isEmpty() || name.equals(searchName)) {
                     results.add(new String[]{ name, String.valueOf(number) });
                 }
             }
 
-            // Closing the resources.
             raf.close();
         }
 
@@ -187,310 +133,193 @@ class DisplayFriends {
 }
 
 
-// Java program to update in the file "data.txt"
-// and change the number of an old contact
+// Update in the file "data.txt"
 class UpdateFriend {
 
-    public static String updateFriend(String newName, String newNumberStr)
+    public static void updateFriend(String newName, String newNumberStr)
     {
 
         try {
 
-            // Get the number to be updated
-            // from the Command line argument
             long newNumber = Long.parseLong(newNumberStr);
-
             String nameNumberString;
             String name;
             long number;
             int index;
-
-            // Using file pointer creating the file.
             File file = new File("data.txt");
 
-            if (!file.exists()) {
+            if (file.exists() == false) {
 
-                // Create a new file if not exists.
                 file.createNewFile();
             }
 
-            // Opening file in reading and write mode.
-            RandomAccessFile raf
-                = new RandomAccessFile(file, "rw");
+            RandomAccessFile raf = new RandomAccessFile(file, "rw");
             boolean found = false;
 
-            // Checking whether the name
-            // of contact already exists.
-            // getFilePointer() give the current offset
-            // value from start of the file.
             while (raf.getFilePointer() < raf.length()) {
 
-                // reading line from the file.
                 nameNumberString = raf.readLine();
 
-                // skip empty or malformed lines
                 if (nameNumberString == null || !nameNumberString.contains("!")) continue;
 
-                // splitting the string to get name and
-                // number
-                String[] lineSplit
-                    = nameNumberString.split("!");
-
-                // separating name and number.
+                String[] lineSplit = nameNumberString.split("!");
                 name = lineSplit[0];
                 number = Long.parseLong(lineSplit[1]);
 
-                // if condition to find existence of record.
-                if (name.equals(newName)
-                    || number == newNumber) {
+                if (name.equals(newName) || number == newNumber) {
                     found = true;
                     break;
                 }
             }
 
-            // Update the contact if record exists.
             if (found == true) {
 
-                // Creating a temporary file
-                // with file pointer as tmpFile.
                 File tmpFile = new File("temp.txt");
+                RandomAccessFile tmpraf = new RandomAccessFile(tmpFile, "rw");
 
-                // Opening this temporary file
-                // in ReadWrite Mode
-                RandomAccessFile tmpraf
-                    = new RandomAccessFile(tmpFile, "rw");
-
-                // Set file pointer to start
                 raf.seek(0);
 
-                // Traversing the data.txt file
-                while (raf.getFilePointer()
-                       < raf.length()) {
+                boolean updated = false;
 
-                    // Reading the contact from the file
+                while (raf.getFilePointer() < raf.length()) {
+
                     nameNumberString = raf.readLine();
 
+                    if (nameNumberString == null || !nameNumberString.contains("!")) continue;
+
                     index = nameNumberString.indexOf('!');
-                    name = nameNumberString.substring(
-                        0, index);
+                    name = nameNumberString.substring(0, index);
 
-                    // Check if the fetched contact
-                    // is the one to be updated
-                    if (name.equals(newName)) {
+                    if (name.equals(newName) && !updated) { 
 
-                        // Update the number of this contact
-                        nameNumberString
-                            = name + "!"
-                              + String.valueOf(newNumber);
+                        nameNumberString = name + "!" + String.valueOf(newNumber);
+                        updated = true;
                     }
 
-                    // Add this contact in the temporary
-                    // file
                     tmpraf.writeBytes(nameNumberString);
-
-                    // Add the line separator in the
-                    // temporary file
-                    tmpraf.writeBytes(
-                        System.lineSeparator());
+                    tmpraf.writeBytes( System.lineSeparator());
                 }
 
-                // The contact has been updated now
-                // So copy the updated content from
-                // the temporary file to original file.
-
-                // Set both files pointers to start
                 raf.seek(0);
                 tmpraf.seek(0);
 
-                // Copy the contents from
-                // the temporary file to original file.
-                while (tmpraf.getFilePointer()
-                       < tmpraf.length()) {
+                while (tmpraf.getFilePointer()< tmpraf.length()) {
                     raf.writeBytes(tmpraf.readLine());
                     raf.writeBytes(System.lineSeparator());
                 }
 
-                // Set the length of the original file
-                // to that of temporary.
                 raf.setLength(tmpraf.length());
-
-                // Closing the resources.
                 tmpraf.close();
                 raf.close();
-
-                // Deleting the temporary file
                 tmpFile.delete();
 
-                return " Friend updated. ";
+                JOptionPane.showMessageDialog(null, "The friend's number of " + newName + " has been updated.");
             }
 
-            // The contact to be updated
-            // could not be found
             else {
 
-                // Closing the resources.
                 raf.close();
-
-                // Return the message
-                return " Input name does not exists. ";
+                
+                JOptionPane.showMessageDialog(null, " Input name does not exists. ");
             }
         }
 
         catch (IOException ioe) {
-            return ioe.toString();
+            JOptionPane.showMessageDialog(null, ioe.toString());
         }
 
         catch (NumberFormatException nef) {
-            return nef.toString();
+            JOptionPane.showMessageDialog(null, nef.toString());
         }
     }
 }
 
 
-// Java program to delete a contact
-// from the file "data.txt"
+// Delete a contact from the file "data.txt"
 class DeleteFriend {
 
-    public static String deleteFriend(String newName)
+    public static void deleteFriend(String newName)
     {
-
         try {
 
             String nameNumberString;
             String name;
             long number;
             int index;
-
-            // Using file pointer creating the file.
             File file = new File("data.txt");
 
-            if (!file.exists()) {
-
-                // Create a new file if not exists.
+            if (file.exists() == false) {
                 file.createNewFile();
             }
 
-            // Opening file in reading and write mode.
-            RandomAccessFile raf
-                = new RandomAccessFile(file, "rw");
+            RandomAccessFile raf = new RandomAccessFile(file, "rw");
             boolean found = false;
 
-            // Checking whether the name of contact exists.
-            // getFilePointer() give the current offset
-            // value from start of the file.
             while (raf.getFilePointer() < raf.length()) {
 
-                // reading line from the file.
                 nameNumberString = raf.readLine();
 
-                // skip empty or malformed lines
                 if (nameNumberString == null || !nameNumberString.contains("!")) continue;
 
-                // splitting the string to get name and
-                // number
-                String[] lineSplit
-                    = nameNumberString.split("!");
+                String[] lineSplit = nameNumberString.split("!");
 
-                // separating name and number.
                 name = lineSplit[0];
                 number = Long.parseLong(lineSplit[1]);
 
-                // if condition to find existence of record.
                 if (name.equals(newName)) {
                     found = true;
                     break;
                 }
             }
 
-            // Delete the contact if record exists.
             if (found == true) {
 
-                // Creating a temporary file
-                // with file pointer as tmpFile.
                 File tmpFile = new File("temp.txt");
 
-                // Opening this temporary file
-                // in ReadWrite Mode
-                RandomAccessFile tmpraf
-                    = new RandomAccessFile(tmpFile, "rw");
+                RandomAccessFile tmpraf = new RandomAccessFile(tmpFile, "rw");
 
-                // Set file pointer to start
                 raf.seek(0);
 
-                // Traversing the data.txt file
-                while (raf.getFilePointer()
-                       < raf.length()) {
+                while (raf.getFilePointer() < raf.length()) {
 
-                    // Reading the contact from the file
                     nameNumberString = raf.readLine();
-
                     index = nameNumberString.indexOf('!');
-                    name = nameNumberString.substring(
-                        0, index);
+                    name = nameNumberString.substring(0, index);
 
-                    // Check if the fetched contact
-                    // is the one to be deleted
                     if (name.equals(newName)) {
-
-                        // Skip inserting this contact
-                        // into the temporary file
                         continue;
                     }
 
-                    // Add this contact in the temporary
-                    // file
                     tmpraf.writeBytes(nameNumberString);
-
-                    // Add the line separator in the
-                    // temporary file
-                    tmpraf.writeBytes(
-                        System.lineSeparator());
+                    tmpraf.writeBytes(System.lineSeparator());
                 }
 
-                // The contact has been deleted now
-                // So copy the updated content from
-                // the temporary file to original file.
-
-                // Set both files pointers to start
                 raf.seek(0);
                 tmpraf.seek(0);
 
-                // Copy the contents from
-                // the temporary file to original file.
-                while (tmpraf.getFilePointer()
-                       < tmpraf.length()) {
+                while (tmpraf.getFilePointer() < tmpraf.length()) {
                     raf.writeBytes(tmpraf.readLine());
                     raf.writeBytes(System.lineSeparator());
                 }
 
-                // Set the length of the original file
-                // to that of temporary.
                 raf.setLength(tmpraf.length());
-
-                // Closing the resources.
                 tmpraf.close();
                 raf.close();
-
-                // Deleting the temporary file
                 tmpFile.delete();
 
-                return " Friend deleted. ";
+                JOptionPane.showMessageDialog(null, "The contact " + newName + " was removed from the data.");
             }
 
-            // The contact to be deleted
-            // could not be found
             else {
 
-                // Closing the resources.
                 raf.close();
 
-                // Return the message
-                return " Input name does not exists. ";
+                JOptionPane.showMessageDialog(null, "Input name does not exist in the data.");
             }
         }
 
         catch (IOException ioe) {
-            return ioe.toString();
+            JOptionPane.showMessageDialog(null, ioe.toString());
         }
     }
 }
